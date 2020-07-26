@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Intro JavaScript Project</title>
+	<link href="https://fonts.googleapis.com/css?family=Lacquer%7cMontserrat:400,700&display=swap" rel="stylesheet">
+
+	<style>
+		body{
+			margin: 0px;
+			padding: 0px;
+			background-image: url(project_images/todo-background.jpg);
+			background-size: cover;
+			background-position: center;
+			font-family: Montserrat, Arial, Helvetica, sans-serif;
+		}
+		/* some presets for multiple use of colors */
+		.green{
+			color: #14a76c;
+		}
+		.yellow{
+			color: #ffe400;
+		}
+		.orange{
+			color: #ff652f;
+		}
+		/* container for page content */
+		div#container{
+			margin: 10vh auto 0 auto;
+			box-sizing: border-box;
+			width: 600px;
+			height: 500px;
+		}
+		/* upper block with the heading */
+		div#heading{
+			width: 100%;
+			text-align: center;
+			font-size: 1.1em;
+			font-weight: 700;
+			color: #747474;
+			background-color: #272727;
+			padding: 10px 10px;
+			box-shadow: 5px 5px 10px rgba(0,0,0,0.8);
+			margin-bottom: 30px;
+			box-sizing: border-box;
+			border-radius: 10px;
+		}
+		/* heading itself */
+		div#heading h1{
+			font-weight: 700;
+		}
+		/* three buttons */
+		div.button{
+			width: 100%;
+			cursor: pointer;
+			box-shadow: 5px 5px 10px rgba(0,0,0,0.8);
+			transition: all 0.1s ease;
+			background-color: #272727;
+			border-radius: 10px;
+		}
+		/* hover effects */
+		div.button:hover{
+			box-shadow: 3px 3px 3px rgba(0,0,0,0.8);
+			transform: translate(2px, 2px);
+		}
+		/* button headings */
+		div.button p{
+			text-align: center;
+			font-family: Montserrat, Arial, Helvetica, sans-serif;
+			font-size: 2.5em;
+			text-transform: uppercase;
+			padding: 20px;
+			margin: 15px;
+			position: relative;
+		}
+		div.button p.green{
+			color: #14a76c;
+			position: relative;
+		}
+		/* animated underline */
+		p.green:before,
+		p.orange:before,
+		p.yellow:before{
+			content: "";
+			position: absolute;
+			bottom: 17px;
+			width: 0px;
+			height: 2px;
+			background-color: #14a76c;
+			transition: all 0.2s ease;
+		}
+		p.green:hover:before{
+			width: 250px;
+		}
+		div.button p.orange{
+			color: #ff652f;
+			position: relative;
+		}
+		p.orange:before{
+			background-color: #ff652f;
+		}
+		p.orange:hover:before{
+			width: 315px;
+		}
+		div.button p.yellow{
+			color: #ffe400;
+			position: relative;
+		}
+		p.yellow:before{
+			background-color: #ffe400;
+		}
+		p.yellow:hover:before{
+			width: 285px;
+		}
+		/* svgs on buttons  */
+		img{
+			position: absolute;
+			right: 10px;
+			top: 26px;
+		}
+	</style>
+</head>
+
+<!--
+
+   ALEXAN    DR         PASKOALE   XA     ND    RPASKO    AL    EX   ANDRPA     SKOALEX 
+  AL    EX   AN         DR          PA   SK    OA    LE   XAN   DR   PA   SK    OA    LE
+  AL    EX   AN         DR           PA SK     OA    LE   XAND  RP   AS    KO   AL    EX
+  ALEXANDR   PA         SKOALEXA      NDR      PASKOALE   XA ND RP   AS    KO   ALEXAND
+  AL    EX   AN         DR           PA SK     OA    LE   XA  NDRP   AS    KO   AL  EX 
+  AL    EX   AN         DR          PA   SK    OA    LE   XA   NDR   PA   SK    OA   LE
+  AL    EX   ANDRPASK   OALEXAND   RP     AS   KO    AL   EX    AN   DRPASK     OA    LE
+
+
+  ALEXAND     RPASKO     ALEXAND   RP    AS    KOALEX
+  AL    EX   AN    DR   PA         SK   OA    LE    XA
+  AL    EX   AN    DR   PA         SK  OA     LE    XA 
+  ALEXAND    RP    AS    KOALEX    ANDRP      AS    KO
+  AL         EXANDRPA         SK   OA  LE     XA    ND
+  AL         EX    AN         DR   PA   SK    OA    LE
+  AL         EX    AN   DRPASKO    AL    EX    ANDRPA
+ 
+id="Alexandr_Pasko_Web_Development_Diploma_2019";
+font-family: "ALEXANDR_PASKO", "no_need_backup_runs_everywhere";
+Cool font, hey?
+--> 
+
+<body>
+
+	<!-- container for content -->
+	<div id="container">
+
+		<!-- upper div with heading -->
+		<div id="heading">
+			<h1>Welcome to My <span class="orange">Super Effective</span> Self <span class="yellow">Management Tool</span> That Makes Our <span class="green">World Better</span></h1>
+		</div>
+
+		<!-- three buttons -->
+		<div class="button" onclick="addTask()">
+			<p class="green">Add a Task
+				<img src="project_images/add.svg" alt="" width="36" height="36" />
+			</p>
+		</div>
+		<div class="button" onclick="deleteTask()">
+			<p class="orange">Delete a Task
+				<img src="project_images/delete.svg" alt="" width="36" height="36" />
+			</p>
+		</div>
+		<div class="button" onclick="listOfTasks()">
+			<p class="yellow">List of Tasks
+				<img src="project_images/list.svg" alt="" width="36" height="36" />
+			</p>
+		</div>
+	</div>
+
+
+
+<script>
+
+	//parallel arrays with tasks and due dates
+	var taskList = ['Task'];
+	var dueDates = ['Due Date'];
+
+	// Function for Adding a Task
+	function addTask()
+	{
+		// prompt a user for task name
+		var taskName = prompt('What on earth can I do to make the World better? Give the task a name');
+		// simple validation for the task name
+		while(taskName.length <5){
+			taskName = prompt('Oh, come on.. Give the task a real name')
+		}
+		// prompt a user for due date for the task
+		var taskDue = prompt('When does your Mom want you to do this? (Example: 29/02/2020)');
+		console.log(taskDue);
+		// validation the date; length 10 characters, slashes at certain places
+		while(taskDue == null || taskDue.charAt(2) != '/' || taskDue.charAt(5) != '/' || taskDue.length != 10){
+				taskDue = prompt('Come on man.. give it a realistic date, according to the example (Example: 29/02/2019)');
+		}
+
+		// if valid, adding the info to name and date arrays
+		if((taskName.length >= 5) && (taskDue != null && taskDue.charAt(2) == '/' && taskDue.charAt(5) == '/' && taskDue.length == 10) ){
+			taskList.push(taskName);
+			dueDates.push(taskDue);
+			alert('The task has been added to your promising list');
+		}else{
+			alert('The task has NOT been added to you list due to incorect information. Try do it again');
+		}
+
+		console.log(taskList);
+		console.log(dueDates);
+		
+	}// end of add task function
+
+	//function for deleting a task
+	function deleteTask()
+	{
+		var askForDelete = '';
+		for(var i = 1; i < taskList.length; i ++){
+			askForDelete += 'Number ' + i + ' for "' + taskList[i] + '" task. ';
+		}
+		var i = prompt('Choose a number of the task you want to delete. ' + askForDelete);
+		console.log(taskList[i]);
+		while(taskList[i] == undefined || i == 0){
+			var ask = confirm('Can you at least enter a valid task number?');
+			if(ask === true){
+				//continue;
+				i = prompt('Choose a number of the task you want to delete. ' + askForDelete);
+			}else{
+				alert('You did not delete anything');
+				break;
+			}
+		}
+		if(taskList[i] != undefined && i != 0){
+			taskList.splice(i, 1);
+			dueDates.splice(i, 1);
+			alert('I knew you would not do it anyway. The task is deleted for now');
+		}
+	}// end of delete a task function
+
+	//function to open list of tasks in a new window
+	function listOfTasks()
+	{
+		//open a new window with a certain parametrs 
+		var tableTasks = window.open('', 'tableTasks', 'top=100,left=25,width=400,height=500');
+		tableTasks.focus();
+		//empty the window
+		tableTasks.document.body.innerHTML = '';
+		//write everything you need to properly show the recent table data
+		tableTasks.document.write(`<style>
+										body{
+											background-color: #272727;
+											margin: 0px;
+											padding: 10px;
+										}
+										h1{
+											padding: 20px;
+											color: #bbb;
+
+										}
+										table{
+											background-color: #ddd;
+											width: 100%;
+											border-collapse: collapse;
+										}
+										td,th{
+											border: 1px solid #fff;
+											padding: 5px;
+											text-align: center;
+										}
+										tr:first-child{
+											background-color: #bbb;
+										}
+									</style>`);
+		tableTasks.document.write('<h1>Here is your \"Making World Better\" list:</h1>');
+		tableTasks.document.write('<table>');
+		tableTasks.document.write('<tr><th>Number</th><th>Task</th><th>Due Date</th></tr>');
+		for(i = 1; i < taskList.length; i ++){
+			tableTasks.document.write('<tr><th>' + i + '</th><td>' + taskList[i] + '</td><td>' + dueDates[i] + '</td></tr>');
+		}
+		tableTasks.document.write('</table></body>');
+	}//end of new window function
+		
+</script>
+
+</body>
+</html>
